@@ -24,6 +24,7 @@ provider:
   runtime: nodejs8.10
   stage: dev
   region: us-east-1
+  profile: serverless-admin
 
   # These environment variables are made available to our functions
   # under process.env.
@@ -107,6 +108,15 @@ functions:
       - http:
           path: notes/{id}
           method: delete
+          cors: true
+          authorizer: aws_iam
+          
+  billing:
+    handler: billing.main
+    events:
+      - http:
+          path: billing
+          method: post
           cors: true
           authorizer: aws_iam
 
